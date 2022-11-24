@@ -5,6 +5,7 @@ import type { ImageLoaderProps } from 'next/image';
 import Link from 'next/link'
 import React from 'react'
 import logo from "./../public/logo.png"
+import userPhoto from "./../public/UserPhotoPlaceholder.png"
 import { HiSearch } from "react-icons/hi";
 import { AiOutlineBell } from "react-icons/ai"
 import { Fragment } from 'react'
@@ -66,7 +67,7 @@ const Header = (props: Props) => {
                   <div className='w-12'>
                     <Menu.Button className="inline-flex w-full justify-center rounded-full object-cover overflow-hidden border hover:bg-blue-100 hover:ring-4 border-gray-300 bg-white shadow-sm focus:outline-none">
                       {/* FIXME: Find solution for this error */}
-                      <Image src={user?.photoURL} alt={"user photo"} width={48} height={48} />
+                      <Image src={user.photoURL ? user.photoURL : userPhoto} alt={"user photo"} width={48} height={48} />
                       {/* <img src={user.photoURL} alt="" srcset="" /> */}
                     </Menu.Button>
                   </div>
