@@ -8,7 +8,7 @@ import { GoMail } from 'react-icons/go'
 import { useRouter } from 'next/navigation'
 
 import { auth } from '../../utils/firebase'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, TwitterAuthProvider } from 'firebase/auth'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 type Props = {}
@@ -17,14 +17,27 @@ const page = (props: Props) => {
 
     const [user, loading] = useAuthState(auth)
 
-    const googleProvider = new GoogleAuthProvider();
     const router = useRouter();
+
+    // Google Auth
+    const googleProvider = new GoogleAuthProvider();
     const googleLogin = async () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             console.log(result.user)
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    // Twitter Auth
+    const twitterProvider = new TwitterAuthProvider();
+    const twitterLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, twitterProvider);
+            console.log(result.user)
+        } catch (error:any) {
+            console.log(error.message)
         }
     }
 
@@ -45,7 +58,7 @@ const page = (props: Props) => {
                     <button className='flex gap-2 items-center w-full p-4 rounded-lg text-lg justify-center bg-black text-white hover:shadow-2xl ease-in-out duration-200'> <AiFillApple className='text-white' size={30} /> Continue with Apple</button>
                     <button className='flex gap-2 items-center w-full p-4 rounded-lg text-lg justify-center bg-[#333] text-white hover:shadow-2xl ease-in-out duration-200'> <BsGithub className='text-white' size={30} /> Continue with GitHub</button>
                     <button onClick={googleLogin} className='flex gap-2 items-center w-full p-4 rounded-lg text-lg justify-center bg-[#4285F4] text-white hover:shadow-2xl ease-in-out duration-200'> <FcGoogle size={30} /> Continue with Google</button>
-                    <button className='flex gap-2 items-center w-full p-4 rounded-lg text-lg justify-center bg-[#1DA1F2] text-white hover:shadow-2xl ease-in-out duration-200'> <BsTwitter className='text-white' size={30} /> Continue with Twitter</button>
+                    <button onClick={twitterLogin} className='flex gap-2 items-center w-full p-4 rounded-lg text-lg justify-center bg-[#1DA1F2] text-white hover:shadow-2xl ease-in-out duration-200'> <BsTwitter className='text-white' size={30} /> Continue with Twitter</button>
                     <button className='flex gap-2 items-center border w-full p-4 rounded-lg text-lg justify-center hover:shadow-2xl ease-in-out duration-200'> <AiFillFacebook className='text-[#4267B2]' size={30} /> Continue with Facebook</button>
                     <button className='flex gap-2 items-center border w-full p-4 rounded-lg text-lg justify-center bg-white text-black hover:shadow-2xl ease-in-out duration-200'> <BsMicrosoft className='text-[#737373]' size={30} /> Continue with Microsoft</button>
                     <button className='flex gap-2 items-center border w-full p-4 rounded-lg text-lg justify-center bg-white text-black hover:shadow-2xl ease-in-out duration-200'> <GoMail size={30} /> Continue with Email</button>
